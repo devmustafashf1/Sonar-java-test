@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProjectPlanner.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">ProjectPlanner.java</span></div><h1>ProjectPlanner.java</h1><pre class="source lang-java linenums">import model.*;
+import util.*;
+
+import java.io.IOException;
+import java.util.List;
+
+<span class="nc" id="L7">public class ProjectPlanner {</span>
+    public static void main(String[] args) throws IOException {
+<span class="fc" id="L9">        Project project = new Project();</span>
+
+        // Load tasks and resources from text files
+<span class="fc" id="L12">        List&lt;Task&gt; tasks = TaskParser.parseTasks(&quot;tasks.txt&quot;);</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        for (Task t : tasks) {</span>
+<span class="fc" id="L14">            project.addTask(t);</span>
+<span class="fc" id="L15">        }</span>
+
+<span class="fc" id="L17">        List&lt;Resource&gt; resources = ResourceParser.parseResources(&quot;resources.txt&quot;, tasks);</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        for (Resource r : resources) {</span>
+<span class="fc" id="L19">            project.addResource(r);</span>
+<span class="fc" id="L20">        }</span>
+
+        // i) Project completion time
+<span class="fc" id="L23">        System.out.println(project.getCompletionTime());</span>
+
+        // ii) Overlapping tasks
+<span class="fc" id="L26">        System.out.println(&quot;\nOverlapping tasks:&quot;);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        for (String s : project.overlappingTasks()) {</span>
+<span class="fc" id="L28">            System.out.println(s);</span>
+<span class="fc" id="L29">        }</span>
+
+<span class="fc" id="L31">       System.out.println(&quot;\nTeams for all tasks:&quot;);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">    for (Task task : tasks) {</span>
+<span class="fc" id="L33">    System.out.println(&quot;Task &quot; + task.getId() + &quot; (&quot; + task.getTitle() + &quot;):&quot;);</span>
+<span class="fc" id="L34">    List&lt;String&gt; team = project.teamForTask(task.getId());</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">    if (team.isEmpty()) {</span>
+<span class="nc" id="L36">        System.out.println(&quot;  No resources assigned.&quot;);</span>
+    } else {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (String member : team) {</span>
+<span class="fc" id="L39">            System.out.println(&quot;  &quot; + member);</span>
+<span class="fc" id="L40">        }</span>
+    }
+<span class="fc" id="L42">    System.out.println();</span>
+<span class="fc" id="L43">}</span>
+
+
+        // iv) Effort per resource
+<span class="fc" id="L47">        System.out.println(&quot;\nEffort per resource:&quot;);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (String s : project.effortPerResource()) {</span>
+<span class="fc" id="L49">            System.out.println(s);</span>
+<span class="fc" id="L50">        }</span>
+<span class="fc" id="L51">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
